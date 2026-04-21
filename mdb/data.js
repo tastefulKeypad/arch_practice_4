@@ -209,3 +209,105 @@ db.rents.insertMany([
         status: "Active"
     },
 ]);
+
+// ========== BAD DATA - SHOULD NOT APPEAR IN TABLES ==========
+
+db.cars.insertMany([
+    // carClass < 1
+    {
+        carClass: -1,
+        price: 159,
+        capacity: 2,
+        name: "Very bad car"
+    },
+    // price < 1
+    {
+        carClass: 2,
+        price: 0,
+        capacity: 4,
+        name: "Very cheap car"
+    },
+    // capacity < 1
+    {
+        carClass: 3,
+        price: 480,
+        capacity: -213,
+        name: "Very strange car"
+    },
+    // name length < 1
+    {
+        carClass: 3,
+        price: 480,
+        capacity: 2,
+        name: ""
+    },
+    // name length > 200
+    {
+        carClass: 3,
+        price: 480,
+        capacity: 2,
+        name: "Very loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong car"
+    }
+]);
+
+db.users.insertMany([
+    // email is NOT unique
+    {
+        email: "admin@example.com",
+        name: "Admin",
+        surname: "Clonovich",
+        password: "$argon2id$v=19$m=65536,t=3,p=4$L/zdZeZbUgw7FVQBU3Ob9g$CIz0BUlERwmCeKhO/IK4oRFCNStqBrxYzoqNjSc01O4",
+        isAdmin: true
+    },
+    // email contains bad chars
+    {
+        email: "use!@ex%mple.c*m",
+        name: "Bad",
+        surname: "Email Dude",
+        password: "$argon2id$v=19$m=65536,t=3,p=4$Iho8i4xAWtjahDO70/sJYw$xagc7c4SjBt+mZ19PsLdX+q7XZaqSB0HJAmkEPeCtqI",
+        isAdmin: false
+    },
+    // email contains whitespaces at start
+    {
+        email: "   whitespace@example.com",
+        name: "White",
+        surname: "Spacevovich",
+        password: "$argon2id$v=19$m=65536,t=3,p=4$J6d2FKqciAq1ge/mAxaubA$KRJ2K2+ITyxMIiJ6+9dLkELVpLZx57kQP06XRIig0dY",
+        isAdmin: false
+    },
+    // email contains whitespaces at end
+    {
+        email: "white@space.com      ",
+        name: "White",
+        surname: "Spacevovich Junior",
+        password: "$argon2id$v=19$m=65536,t=3,p=4$mQb1M4P+QriojNSNU7OD0Q$tsik2hGDTZgDbF/eCIO1nmZygCSxbEMKydeO01Zyyzk",
+        isAdmin: false
+    }
+]);
+
+db.rents.insertMany([
+    // status length < 1
+    {
+        carId: carsIds[5],
+        userId: usersIds[7],
+        dateStart: new Date("2026-05-01T15:00:00"),
+        dateEnd: new Date("2027-05-01T15:00:00"),
+        status: ""
+    },
+    // status length > 200
+    {
+        carId: carsIds[3],
+        userId: usersIds[5],
+        dateStart: new Date("2025-07-01T13:00:00"),
+        dateEnd: new Date("2027-10-10T16:30:00"),
+        status: "Very loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong status"
+    },
+    // dateStart > dateEnd
+    {
+        carId: carsIds[6],
+        userId: usersIds[8],
+        dateStart: new Date("2021-05-01T15:00:00"),
+        dateEnd: new Date("2012-05-10T15:00:00"),
+        status: "Time traveling"
+    }
+]);
