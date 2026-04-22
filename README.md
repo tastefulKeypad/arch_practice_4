@@ -26,10 +26,6 @@
 ## Структура проекта
 ```
 arch_practice_4
-├── api
-│   ├── db - Содержит модели объектов для БД
-│   ├── endpoints - Содержит endpoint'ы API
-│   └── schemas - Содержит схемы объектов для валидации pydantic
 └── mdb - Содержит файлы MongoDB
 
 ```
@@ -44,7 +40,6 @@ docker-compose up -d --build
 ``` bash
 docker-compose down -v
 docker rmi arch_practice_4_db_image:latest 
-docker rmi arch_practice_4_api_image:latest
 ```
 
 
@@ -55,9 +50,9 @@ docker exec -it arch_practice_4_db_container mongosh
 ``` 
 Пример вывода коллекции автомобилей `cars` после переключения на основную БД `servicebd`:
 ```
-test> use servicebd
-switched to db servicebd
-servicebd> db.cars.find()
+test> use servicedb
+switched to db servicedb
+servicedb> db.cars.find()
 [
   {
     _id: ObjectId('69e8e16cde146425f144ba89'),
@@ -131,12 +126,3 @@ servicebd> db.cars.find()
   }
 ]
 ```
-
-Помимо этого на ```localhost:8000/docs``` будет доступна интерактивная OPENAPI документация API.
-Чтобы зайти под администратором:
-username: admin@example.com 
-password: admin
-
-Чтобы зайти под пользователем:
-username: user1@example.com
-password: user
