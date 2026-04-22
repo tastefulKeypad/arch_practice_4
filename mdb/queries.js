@@ -4,8 +4,8 @@ db = db.getSiblingDB("servicedb");
 function CreateUser(uEmail, uName, uSurname, uPassword, uIsAdmin = false) {
     const result = db.users.insertOne({
         email: uEmail,
-        name: uname,
-        uSurname: uSurname,
+        name: uName,
+        surname: uSurname,
         password: uPassword,
         isAdmin: uIsAdmin
     });
