@@ -48,11 +48,13 @@ docker rmi arch_practice_4_db_image:latest
 ``` bash
 docker exec -it arch_practice_4_db_container mongosh
 ``` 
-Пример вывода коллекции автомобилей `cars` после переключения на основную БД `servicebd`:
+Пример вывода коллекции автомобилей `cars` после переключения на основную БД `servicebd` с использованием функций описанных в `queries.js`:
 ```
 test> use servicedb
 switched to db servicedb
-servicedb> db.cars.find()
+servicedb> load("/queries.js")
+true
+servicedb> GetAllCars()
 [
   {
     _id: ObjectId('69e8e16cde146425f144ba89'),
